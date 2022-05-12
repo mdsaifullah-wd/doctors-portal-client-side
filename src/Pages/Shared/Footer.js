@@ -11,9 +11,9 @@ const Footer = () => {
         backgroundSize: 'cover',
       }}
       className='pt-16'>
-      <div class='footer p-10 text-base-content justify-around mb-20'>
+      <div className='footer p-10 text-base-content justify-around mb-20'>
         <div>
-          <span class='footer-title text-xl'>Services</span>
+          <span className='footer-title text-xl'>Services</span>
           <Link to='/' className='link link-hover text-base'>
             Emergency Checkup
           </Link>
@@ -28,7 +28,7 @@ const Footer = () => {
           </Link>
         </div>
         <div>
-          <span class='footer-title text-xl'>Oral Health</span>
+          <span className='footer-title text-xl'>Oral Health</span>
           <Link to='/' className='link link-hover text-base'>
             Fluoride Treatment
           </Link>
@@ -40,7 +40,7 @@ const Footer = () => {
           </Link>
         </div>
         <div>
-          <span class='footer-title text-xl'>Our Address</span>
+          <span className='footer-title text-xl'>Our Address</span>
           <address>New York- 1010, Hudson</address>
         </div>
       </div>
