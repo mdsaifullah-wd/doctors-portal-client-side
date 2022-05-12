@@ -25,8 +25,8 @@ const Navbar = () => {
     </>
   );
   return (
-    <div className='navbar bg-white sticky top-0 z-10'>
-      <div className='navbar-start'>
+    <div className='navbar justify-between bg-white sticky top-0 z-10'>
+      <div className=''>
         <div className='dropdown'>
           <label tabIndex='0' className='btn btn-ghost lg:hidden'>
             <svg
@@ -53,7 +53,7 @@ const Navbar = () => {
           Doctors Portal
         </Link>
       </div>
-      <div className='navbar-end hidden lg:flex'>
+      <div className='hidden lg:flex'>
         <ul className='menu menu-horizontal p-0'>{menuItem}</ul>
       </div>
     </div>

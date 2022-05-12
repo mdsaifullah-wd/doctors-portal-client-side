@@ -5,7 +5,7 @@ import PrimaryButton from '../Shared/Buttons/PrimaryButton';
 const Contact = () => {
   return (
     <section
-      className='py-20'
+      className='py-20 px-5'
       style={{
         backgroundImage: `url(${bg})`,
         backgroundPosition: 'center',

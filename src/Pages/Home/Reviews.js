@@ -31,7 +31,7 @@ const Reviews = () => {
   ];
   return (
     <section className='container mx-auto my-20'>
-      <div className='flex justify-between'>
+      <div className='flex justify-between px-5'>
         <div>
           <h3 className='text-secondary text-xl font-bold mt-3 mb-2'>
             Testimonials

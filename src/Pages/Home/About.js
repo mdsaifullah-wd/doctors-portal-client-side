@@ -4,14 +4,14 @@ import PrimaryButton from '../Shared/Buttons/PrimaryButton';
 
 const About = () => {
   return (
-    <section className='hero container sm:px-8 md:px-28 mx-auto my-20'>
+    <section className='hero container sm:px-8 lg:px-16 mx-auto my-20'>
       <div className='hero-content flex-col lg:flex-row gap-16'>
         <img
           src={treatment}
-          className='max-w-sm rounded-lg shadow-2xl flex-1'
+          className='max-w-sm rounded-lg shadow-2xl'
           alt=''
         />
-        <div className='flex-1'>
+        <div className=''>
           <h1 className='text-5xl text-accent font-bold'>
             Exceptional Dental Care, on Your Terms
           </h1>

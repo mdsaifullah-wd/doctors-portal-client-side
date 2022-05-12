@@ -12,10 +12,10 @@ const Appointment = () => {
         backgroundSize: 'cover',
       }}
       className='flex justify-between items-center mt-48 mb-20 px-12'>
-      <div className='flex-1 mt-[-130px]'>
+      <div className='flex-1 mt-[-130px] hidden md:block'>
         <img src={doctor} alt='' />
       </div>
-      <div className='text-white flex-1'>
+      <div className='text-white flex-1 py-16'>
         <h3 className='text-secondary text-xl mb-6'>Appointment</h3>
         <h2 className='text-4xl mb-6'>Make an Appointment Today</h2>
         <p className='text-base mb-8'>
