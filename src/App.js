@@ -21,7 +21,6 @@ function App() {
         <Route path='/contact-us' element={<ContactUs />} />
         <Route path='/login' element={<Login />} />
       </Routes>
-      <Footer />
     </div>
   );
 }

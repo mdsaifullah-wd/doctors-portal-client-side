@@ -6,13 +6,13 @@ import PrimaryButton from '../Shared/Buttons/PrimaryButton';
 const Banner = () => {
   return (
     <div
-      className={`hero lg:min-h-[calc(100vh-80)]`}
+      className={`hero lg:min-h-[calc(100vh-80px)]`}
       style={{
         backgroundImage: `url(${bg})`,
         backgroundPosition: 'center',
         backgroundSize: 'cover',
       }}>
-      <div>
+      <div className='px-12'>
         <div className='hero-content flex-col lg:flex-row-reverse gap-10'>
           <img
             src={chair}
