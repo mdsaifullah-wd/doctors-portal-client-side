@@ -5,7 +5,7 @@ import PrimaryButton from '../Shared/Buttons/PrimaryButton';
 
 const Banner = () => {
   return (
-    <div
+    <section
       className={`hero lg:min-h-[calc(100vh-80px)]`}
       style={{
         backgroundImage: `url(${bg})`,
@@ -32,7 +32,7 @@ const Banner = () => {
           </div>
         </div>
       </div>
-    </div>
+    </section>
   );
 };
 

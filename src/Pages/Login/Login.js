@@ -1,10 +1,25 @@
 import React, { useEffect, useState } from 'react';
+import auth from '../../firebase.init';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
+import {
+  useCreateUserWithEmailAndPassword,
+  useSignInWithEmailAndPassword,
+  useSignInWithGoogle,
+} from 'react-firebase-hooks/auth';
 
 const Login = () => {
+  // Login Page State
   const [login, setLogin] = useState(true);
+
+  // React Firebase hooks
+  const [createUserWithEmailAndPassword] =
+    useCreateUserWithEmailAndPassword(auth);
+  const [signInWithEmailAndPassword] = useSignInWithEmailAndPassword(auth);
+  const [signInWithGoogle] = useSignInWithGoogle(auth);
+
+  // Schema Validation
   let schema;
   if (!login) {
     schema = yup.object({
@@ -22,18 +37,29 @@ const Login = () => {
       password: yup.string().required('Password is required'),
     });
   }
+  // React hook form
   const {
     register,
     handleSubmit,
     reset,
     formState: { errors },
   } = useForm({ resolver: yupResolver(schema) });
+
+  // Event Handler
   const onSubmit = (data) => {
+    const { email, password } = data;
     console.log(data);
+    login
+      ? signInWithEmailAndPassword(email, password)
+      : createUserWithEmailAndPassword(email, password);
   };
+  // Sign In with Google
+
+  // Use Effect
   useEffect(() => {
     reset();
   }, [login]);
+
   return (
     <div className='min-h-[calc(100vh-64px)] flex justify-center items-center'>
       <div className='flex flex-col w-full max-w-sm border-opacity-50 shadow-lg p-8'>
@@ -130,7 +156,9 @@ const Login = () => {
         </p>
 
         <div className='divider'>OR</div>
-        <button className='btn btn-outline uppercase'>
+        <button
+          onClick={() => signInWithGoogle()}
+          className='btn btn-outline uppercase'>
           Continue with Google
         </button>
       </div>
