@@ -1,12 +1,44 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { useForm } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
+import * as yup from 'yup';
 
 const Login = () => {
   const [login, setLogin] = useState(true);
+  let schema;
+  if (!login) {
+    schema = yup.object({
+      name: yup.string().required('Name is required'),
+      email: yup.string().email('Invalid email').required('Email is required'),
+      password: yup.string().required('Password is required'),
+      confirmPassword: yup
+        .string()
+        .oneOf([yup.ref('password'), null], 'Passwords must match')
+        .required('Confirm password required'),
+    });
+  } else {
+    schema = yup.object({
+      email: yup.string().email('Invalid email').required('Email is required'),
+      password: yup.string().required('Password is required'),
+    });
+  }
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm({ resolver: yupResolver(schema) });
+  const onSubmit = (data) => {
+    console.log(data);
+  };
+  useEffect(() => {
+    reset();
+  }, [login]);
   return (
     <div className='min-h-[calc(100vh-64px)] flex justify-center items-center'>
       <div className='flex flex-col w-full max-w-sm border-opacity-50 shadow-lg p-8'>
         <h2 className='text-center text-xl'>{login ? 'Login' : 'Sign Up'}</h2>
-        <form>
+        <form onSubmit={handleSubmit(onSubmit)}>
           {login || (
             <div className='form-control w-full'>
               <label className='label'>
@@ -16,8 +48,9 @@ const Login = () => {
                 type='text'
                 placeholder='Enter your name'
                 className='input input-bordered w-full'
+                {...register('name')}
               />
-              <label className='label'></label>
+              <p className='mt-2 text-sm text-error'>{errors.name?.message}</p>
             </div>
           )}
           <div className='form-control w-full'>
@@ -28,8 +61,9 @@ const Login = () => {
               type='text'
               placeholder='Enter your email'
               className='input input-bordered w-full'
+              {...register('email')}
             />
-            <label className='label'></label>
+            <p className='mt-2 text-sm text-error'>{errors.email?.message}</p>
           </div>
 
           <div className='form-control w-full'>
@@ -40,7 +74,11 @@ const Login = () => {
               type='password'
               placeholder='Enter your password'
               className='input input-bordered w-full'
+              {...register('password')}
             />
+            <p className='mt-2 text-sm text-error'>
+              {errors.password?.message}
+            </p>
             <label className='label'>
               {login && (
                 <span className='label-text-alt'>Forget Password?</span>
@@ -57,7 +95,11 @@ const Login = () => {
                 type='password'
                 placeholder='Confirm your password'
                 className='input input-bordered w-full'
+                {...register('confirmPassword')}
               />
+              <p className='mt-2 text-sm text-error'>
+                {errors.confirmPassword?.message}
+              </p>
             </div>
           )}
 
