@@ -7,8 +7,9 @@ import BookingModal from './BookingModal';
 const AvailableAppointments = ({ selectedDay }) => {
   const [services, setServices] = useState([]);
   const [treatment, setTreatment] = useState(null);
+  const local = 'http://localhost:3001/services';
   useEffect(() => {
-    axios.get('services.json').then((res) => setServices(res.data));
+    axios.get(local).then((res) => setServices(res.data));
   }, []);
   return (
     <section className='container my-20'>

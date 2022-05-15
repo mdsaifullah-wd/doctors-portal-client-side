@@ -18,19 +18,13 @@ const AppointmentServiceCard = ({ service, setTreatment }) => {
           {slots.length ? 'Spaces' : 'Space'} Available
         </p>
         <div class='card-actions'>
-          <button
-            className={`font-bold uppercase text-white bg-gradient-to-r from-secondary to-primary rounded-lg ${
-              slots.length === 0
-                ? 'opacity-20'
-                : 'hover:from-accent hover:to-accent hover:border-accent'
-            } `}
+          <label
+            for='booking-modal'
+            className={`btn btn-primary font-bold uppercase text-white bg-gradient-to-r from-secondary to-primary hover:from-accent hover:to-accent hover:border-accent`}
             disabled={slots.length === 0}
-            onClick={() => setTreatment(service)}
-            for='booking-modal'>
-            <label for='booking-modal' className='inline-block px-5 py-4'>
-              Book Appointment
-            </label>
-          </button>
+            onClick={() => setTreatment(service)}>
+            Book Appointment
+          </label>
         </div>
       </div>
     </div>

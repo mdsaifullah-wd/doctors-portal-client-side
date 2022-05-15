@@ -14,8 +14,7 @@ const BookingModal = ({ treatment, setTreatment, selectedDay }) => {
         <div class='modal-box'>
           <label
             for='booking-modal'
-            class='btn btn-sm btn-circle absolute right-2 top-2'
-            onClick={() => setTreatment(null)}>
+            class='btn btn-sm btn-circle absolute right-2 top-2'>
             ✕
           </label>
           <h3 class='font-bold text-lg'>{name}</h3>
