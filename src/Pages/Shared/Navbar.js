@@ -23,15 +23,13 @@ const Navbar = () => {
       <li>
         <Link to='/contact-us'>Contact Us</Link>
       </li>
-      {user ? (
-        <button onClick={() => signOut(auth)}>
-          Log Out {user.displayName}
-        </button>
-      ) : (
-        <li>
+      <li>
+        {user ? (
+          <button onClick={() => signOut(auth)}>Log Out</button>
+        ) : (
           <Link to='/login'>Login</Link>
-        </li>
-      )}
+        )}
+      </li>
     </>
   );
   return (

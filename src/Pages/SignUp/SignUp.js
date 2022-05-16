@@ -4,52 +4,61 @@ import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import {
-  useSignInWithEmailAndPassword,
+  useCreateUserWithEmailAndPassword,
   useSignInWithGoogle,
+  useUpdateProfile,
 } from 'react-firebase-hooks/auth';
 import Loading from '../Shared/Loading';
 import { Link, useNavigate } from 'react-router-dom';
 
-const Login = () => {
+const SignUp = () => {
   // Navigate
   const navigate = useNavigate();
-
   // React Firebase hooks
-  const [signInWithEmailAndPassword, eUser, eLoading, eError] =
-    useSignInWithEmailAndPassword(auth);
+  const [createUserWithEmailAndPassword, user, loading, error] =
+    useCreateUserWithEmailAndPassword(auth);
   const [signInWithGoogle, gUser, gLoading, gError] = useSignInWithGoogle(auth);
+  const [updateProfile, updating, updateError] = useUpdateProfile(auth);
 
   // Schema Validation using yup
+
   const schema = yup.object({
+    name: yup.string().required('Name is required'),
     email: yup.string().email('Invalid email').required('Email is required'),
     password: yup.string().required('Password is required'),
+    confirmPassword: yup
+      .string()
+      .oneOf([yup.ref('password'), null], 'Passwords must match')
+      .required('Confirm password required'),
   });
 
   // React hook form
   const {
     register,
     handleSubmit,
-    reset,
     formState: { errors },
   } = useForm({ resolver: yupResolver(schema) });
 
   // Event Handler
   const onSubmit = async (data) => {
-    const { email, password } = data;
-    await signInWithEmailAndPassword(email, password);
+    const { name, email, password } = data;
+
+    await createUserWithEmailAndPassword(email, password);
+    await updateProfile({ displayName: name });
   };
-  if (eUser || gUser) {
+
+  if (user || gUser) {
     navigate('/');
   }
   // Returns
-  if (eLoading || gLoading) {
+  if (loading || gLoading || updating) {
     return <Loading />;
   }
-  let signInError;
-  if (gError || eError) {
-    signInError = (
+  let signUpError;
+  if (error || gError || updateError) {
+    signUpError = (
       <p className='text-center text-error mb-3'>
-        {gError?.message || eError?.message}
+        {error?.message || gError?.message || updateError?.message}
       </p>
     );
   }
@@ -57,9 +66,22 @@ const Login = () => {
   return (
     <div className='min-h-[calc(100vh-64px)] flex justify-center items-center'>
       <div className='flex flex-col w-full max-w-sm border-opacity-50 shadow-lg p-8'>
-        {signInError}
-        <h2 className='text-center text-xl'>Login</h2>
+        {signUpError}
+        <h2 className='text-center text-xl'>Sign Up</h2>
         <form onSubmit={handleSubmit(onSubmit)}>
+          <div className='form-control w-full'>
+            <label className='label'>
+              <span className='label-text text-sm'>Name</span>
+            </label>
+            <input
+              type='text'
+              placeholder='Enter your name'
+              className='input input-bordered w-full'
+              {...register('name')}
+            />
+            <p className='mt-2 text-sm text-error'>{errors.name?.message}</p>
+          </div>
+
           <div className='form-control w-full'>
             <label className='label'>
               <span className='label-text text-sm'>Email</span>
@@ -86,22 +108,34 @@ const Login = () => {
             <p className='mt-2 text-sm text-error'>
               {errors.password?.message}
             </p>
+          </div>
+
+          <div className='form-control w-full'>
             <label className='label'>
-              <span className='label-text-alt'>Forget Password?</span>
+              <span className='label-text text-sm'>Confirm Password</span>
             </label>
+            <input
+              type='password'
+              placeholder='Confirm your password'
+              className='input input-bordered w-full'
+              {...register('confirmPassword')}
+            />
+            <p className='mt-2 text-sm text-error'>
+              {errors.confirmPassword?.message}
+            </p>
           </div>
 
           <input
             type='submit'
-            value='Login'
+            value='Sign Up'
             className='btn btn-accent w-full mt-5 mb-2'
           />
         </form>
 
         <p className='text-center text-sm'>
-          New to Doctors Portal?{' '}
-          <Link to='/signup' className='text-secondary'>
-            Create new account
+          Already have an account?{' '}
+          <Link to='/login' className='text-secondary'>
+            Login
           </Link>
         </p>
 
@@ -117,4 +151,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default SignUp;
