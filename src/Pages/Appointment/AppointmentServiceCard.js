@@ -3,9 +3,9 @@ import React from 'react';
 const AppointmentServiceCard = ({ service, setTreatment }) => {
   const { name, slots } = service;
   return (
-    <div class='card bg-base-100 shadow-xl'>
-      <div class='card-body items-center text-center'>
-        <h2 class='card-title text-secondary text-xl '>{name}</h2>
+    <div className='card bg-base-100 shadow-xl'>
+      <div className='card-body items-center text-center'>
+        <h2 className='card-title text-secondary text-xl '>{name}</h2>
         <p className='uppercase text-sm'>
           {slots.length ? (
             slots[0]
@@ -17,9 +17,9 @@ const AppointmentServiceCard = ({ service, setTreatment }) => {
           {slots.length ? slots.length : 'No'}{' '}
           {slots.length ? 'Spaces' : 'Space'} Available
         </p>
-        <div class='card-actions'>
+        <div className='card-actions'>
           <label
-            for='booking-modal'
+            htmlFor='booking-modal'
             className={`btn btn-primary font-bold uppercase text-white bg-gradient-to-r from-secondary to-primary hover:from-accent hover:to-accent hover:border-accent`}
             disabled={slots.length === 0}
             onClick={() => setTreatment(service)}>

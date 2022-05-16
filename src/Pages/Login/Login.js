@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import auth from '../../firebase.init';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -8,11 +8,13 @@ import {
   useSignInWithGoogle,
 } from 'react-firebase-hooks/auth';
 import Loading from '../Shared/Loading';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 
 const Login = () => {
   // Navigate
   const navigate = useNavigate();
+  const location = useLocation();
+  let from = location.state?.from?.pathname || '/';
 
   // React Firebase hooks
   const [signInWithEmailAndPassword, eUser, eLoading, eError] =
@@ -29,7 +31,6 @@ const Login = () => {
   const {
     register,
     handleSubmit,
-    reset,
     formState: { errors },
   } = useForm({ resolver: yupResolver(schema) });
 
@@ -38,9 +39,11 @@ const Login = () => {
     const { email, password } = data;
     await signInWithEmailAndPassword(email, password);
   };
-  if (eUser || gUser) {
-    navigate('/');
-  }
+  useEffect(() => {
+    if (eUser || gUser) {
+      navigate(from, { replace: true });
+    }
+  }, [eUser, gUser, navigate, from]);
   // Returns
   if (eLoading || gLoading) {
     return <Loading />;
