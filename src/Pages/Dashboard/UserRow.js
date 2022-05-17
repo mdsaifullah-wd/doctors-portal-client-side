@@ -5,20 +5,46 @@ import { toast } from 'react-toastify';
 const UserRow = ({ user, i, refetch }) => {
   const { email, role } = user;
   const makeAdmin = () => {
-    axios.put(`http://localhost:3001/admin/${email}`).then((res) => {
-      if (res.status === 200) {
-        refetch();
-        toast.success(`${email} is made an Admin!`);
-      }
-    });
+    fetch(`http://localhost:3001/admin/add/${email}`, {
+      method: 'PUT',
+      headers: {
+        authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+      },
+    })
+      .then((res) => {
+        if (res.status === 200) {
+          refetch();
+          toast.success(`${email} is made an Admin!`);
+        } else if (res.status === 403) {
+          refetch();
+          toast.error('You are not an admin');
+        }
+        return res.json();
+      })
+      .then((data) => {
+        console.log(data);
+      });
   };
   const removeAdmin = () => {
-    axios.put(`http://localhost:3001/admin/remove/${email}`).then((res) => {
-      if (res.status === 200) {
-        refetch();
-        toast.success(`${email} is removed from Admin!`);
-      }
-    });
+    fetch(`http://localhost:3001/admin/remove/${email}`, {
+      method: 'PUT',
+      headers: {
+        authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+      },
+    })
+      .then((res) => {
+        if (res.status === 200) {
+          refetch();
+          toast.success(`${email} is removed from Admin!`);
+        } else if (res.status === 403) {
+          refetch();
+          toast.error('You are not an admin');
+        }
+        return res.json();
+      })
+      .then((data) => {
+        console.log(data);
+      });
   };
   return (
     <tr>
