@@ -24,6 +24,7 @@ const Navbar = () => {
         <Link to='/contact-us'>Contact Us</Link>
       </li>
       <li>
+        {user && <Link to='/dashboard'>Dashboard</Link>}
         {user ? (
           <button onClick={() => signOut(auth)}>Log Out</button>
         ) : (
