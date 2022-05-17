@@ -73,7 +73,7 @@ const Navbar = () => {
       <label
         tabIndex='1'
         className='btn btn-ghost drawer-button lg:hidden'
-        for='dashboard-sidebar'>
+        htmlFor='dashboard-sidebar'>
         <svg
           xmlns='http://www.w3.org/2000/svg'
           className='h-5 w-5'
