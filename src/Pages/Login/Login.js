@@ -9,6 +9,7 @@ import {
 } from 'react-firebase-hooks/auth';
 import Loading from '../Shared/Loading';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
+import useToken from '../../hooks/useToken';
 
 const Login = () => {
   // Navigate
@@ -20,6 +21,9 @@ const Login = () => {
   const [signInWithEmailAndPassword, eUser, eLoading, eError] =
     useSignInWithEmailAndPassword(auth);
   const [signInWithGoogle, gUser, gLoading, gError] = useSignInWithGoogle(auth);
+
+  // useToken
+  const [token] = useToken(eUser || gUser);
 
   // Schema Validation using yup
   const schema = yup.object({
@@ -40,10 +44,10 @@ const Login = () => {
     await signInWithEmailAndPassword(email, password);
   };
   useEffect(() => {
-    if (eUser || gUser) {
+    if (token) {
       navigate(from, { replace: true });
     }
-  }, [eUser, gUser, navigate, from]);
+  }, [token, navigate, from]);
   // Returns
   if (eLoading || gLoading) {
     return <Loading />;

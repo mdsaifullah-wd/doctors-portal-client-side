@@ -10,6 +10,7 @@ import {
 } from 'react-firebase-hooks/auth';
 import Loading from '../Shared/Loading';
 import { Link, useNavigate } from 'react-router-dom';
+import useToken from '../../hooks/useToken';
 
 const SignUp = () => {
   // Navigate
@@ -20,6 +21,8 @@ const SignUp = () => {
   const [signInWithGoogle, gUser, gLoading, gError] = useSignInWithGoogle(auth);
   const [updateProfile, updating, updateError] = useUpdateProfile(auth);
 
+  // useToken
+  const [token] = useToken(user || gUser);
   // Schema Validation using yup
 
   const schema = yup.object({
@@ -47,7 +50,7 @@ const SignUp = () => {
     await updateProfile({ displayName: name });
   };
 
-  if (user || gUser) {
+  if (token) {
     navigate('/');
   }
   // Returns
