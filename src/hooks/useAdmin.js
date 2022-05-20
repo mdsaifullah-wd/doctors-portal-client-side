@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState } from "react";
 
 const useAdmin = (user) => {
   const { email } = user;
@@ -6,14 +6,22 @@ const useAdmin = (user) => {
   const [adminLoading, setAdminLoading] = useState(true);
   useEffect(() => {
     if (email) {
-      fetch(`http://localhost:3001/user/admin/${email}`, {
+      fetch(`http://localhost:3001/user/admin`, {
         headers: {
-          authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+          authorization: `Bearer ${localStorage.getItem("accessToken")}`,
         },
       })
-        .then((res) => res.json())
+        .then((res) => {
+          if (res.status === 403) {
+            setAdmin(false);
+          }
+          return res.json();
+        })
         .then((data) => {
-          setAdmin(data);
+          console.log(data.admin);
+          if (data.admin) {
+            setAdmin(true);
+          }
           setAdminLoading(false);
         });
     }

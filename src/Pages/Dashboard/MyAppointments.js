@@ -1,9 +1,9 @@
-import axios from 'axios';
-import { signOut } from 'firebase/auth';
-import React, { useEffect, useState } from 'react';
-import { useAuthState } from 'react-firebase-hooks/auth';
-import { useNavigate } from 'react-router-dom';
-import auth from '../../firebase.init';
+import axios from "axios";
+import { signOut } from "firebase/auth";
+import React, { useEffect, useState } from "react";
+import { useAuthState } from "react-firebase-hooks/auth";
+import { useNavigate } from "react-router-dom";
+import auth from "../../firebase.init";
 
 const MyAppointments = () => {
   const [user] = useAuthState(auth);
@@ -13,7 +13,7 @@ const MyAppointments = () => {
     axios
       .get(`http://localhost:3001/booking?patient=${user.email}`, {
         headers: {
-          authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+          authorization: `Bearer ${localStorage.getItem("accessToken")}`,
         },
       })
       .then((data) => setApppointments(data))
@@ -21,17 +21,17 @@ const MyAppointments = () => {
         const status = error.response.status;
         if (status === 401 || status === 403) {
           signOut(auth);
-          localStorage.removeItem('accessToken');
-          navigate('/');
+          localStorage.removeItem("accessToken");
+          navigate("/");
         }
       });
   }, [user.email, navigate]);
 
   return (
     <>
-      <div className='my-5 text-2xl font-semibold'>My Appointments</div>
-      <div className='overflow-x-auto'>
-        <table className='table table-zebra w-full'>
+      <div className="my-5 text-2xl font-semibold">My Appointments</div>
+      <div className="overflow-x-auto">
+        <table className="table table-zebra w-full">
           <thead>
             <tr>
               <th></th>
